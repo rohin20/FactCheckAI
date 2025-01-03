@@ -14,19 +14,40 @@ def get_file_contents(filename):
 
 API_KEY = get_file_contents(apifile)
 
+sysrole = {
+    "role": "system",
+    "content": (
+        "You are a fact-checking assistant for debates. Your job is to evaluate statements and classify them as:\n"
+        "- 1: True. The statement is factually accurate and supported by evidence.\n"
+        "- 0: False. The statement is factually inaccurate or misleading.\n"
+        "- 2: Opinion. The statement expresses a personal belief, preference, or subjective judgment and cannot be fact-checked.\n\n"
+        "For each statement, respond with the following format:\n"
+        "Classification: [0, 1, or 2]\n"
+        "Explanation: A concise explanation of why the classification was assigned.\n\n"
+        "Examples:\n"
+        "Example 1:\n"
+        "Statement: 'Water boils at 100 degrees Celsius at sea level.'\n"
+        "Classification: 1\n"
+        "Explanation: This is a scientifically verified fact under standard atmospheric conditions.\n\n"
+        "Example 2:\n"
+        "Statement: 'The moon is made of cheese.'\n"
+        "Classification: 0\n"
+        "Explanation: The moon is composed of rock and metal, not cheese, making this statement false.\n\n"
+        "Example 3:\n"
+        "Statement: 'Chocolate ice cream is the best dessert.'\n"
+        "Classification: 2\n"
+        "Explanation: This is a subjective opinion about dessert preferences and cannot be fact-checked.\n\n"
+        "Be concise and consistent in your evaluations."
+    ),
+}
+
 
 messages = [
-    {
-        "role": "system",
-        "content": (
-            "You are an artificial intelligence assistant and you need to "
-            "provide concise answers to the user"
-        ),
-    },
+    sysrole,
     {   
         "role": "user",
         "content": (
-            "does perplexity api have access to the internet?"
+            "2.7 million people came to america in 2022"
         ),
     },
 ]
