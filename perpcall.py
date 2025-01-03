@@ -1,4 +1,5 @@
 from openai import OpenAI
+import transcribe
 
 apifile = 'apikey'
 
