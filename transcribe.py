@@ -3,6 +3,7 @@ import speech_recognition as sr
 def live_transcribe():
     # Initialize recognizer
     recognizer = sr.Recognizer()
+    recognizer.pause_threshold = 1 
     
     # Use the default microphone as the audio source
     with sr.Microphone() as source:
@@ -13,15 +14,12 @@ def live_transcribe():
         
         while True:
             try:
-                # Listen for audio input
-                audio = recognizer.listen(source)
-                
-                # Convert speech to text
+                audio = recognizer.listen(source) 
                 text = recognizer.recognize_google(audio)
-                
-
                 print(f"{text}\n")
                 
+
+
             except sr.UnknownValueError:
                 pass
             except sr.RequestError as e:
