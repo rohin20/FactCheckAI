@@ -40,6 +40,7 @@ def live_transcribe():
     
     recognizer = sr.Recognizer()
     recognizer.pause_threshold = 1 
+    recognizer.energy_threshold = 150
     
     listener = keyboard.Listener(on_press=on_press)
     listener.start()
@@ -47,7 +48,7 @@ def live_transcribe():
     with sr.Microphone() as source:
         print("Initializing... Please wait for calibration...")
         # Calibrate for ambient noise
-        recognizer.adjust_for_ambient_noise(source, duration=2)
+        #recognizer.adjust_for_ambient_noise(source, duration=2)
         print("Ready! Start speaking...")
         
         while True:
@@ -67,7 +68,6 @@ def live_transcribe():
             except KeyboardInterrupt:
                 print("\nStopping transcription...")
                 break
-    print(fulltext)
 
 
 
