@@ -33,15 +33,18 @@ def ai_call(fact):
             "Statement: 'Water boils at 100 degrees Celsius at sea level.'\n"
             "Classification: 1\n"
             "Explanation: This is a scientifically verified fact under standard atmospheric conditions.\n\n"
+            "Output: {\"classification\": 1,\"explanation\": \"This is a scientifically verified fact under standard atmospheric conditions.\"}"
             "Example 2:\n"
             "Statement: 'The moon is made of cheese.'\n"
             "Classification: 0\n"
             "Explanation: The moon is composed of rock and metal, not cheese, making this statement false.\n\n"
+            "Output: {\"classification\": 0,\"explanation\": \"The moon is composed of rock and metal, not cheese, making this statement false.\"}"
             "Example 3:\n"
             "Statement: 'Chocolate ice cream is the best dessert.'\n"
             "Classification: 2\n"
             "Explanation: This is a subjective opinion about dessert preferences and cannot be fact-checked.\n\n"
             "Be concise and consistent in your evaluations."
+            "Output: {\"classification\": 3,\"explanation\": \"This is a subjective opinion about dessert preferences and cannot be fact-checked.\"}"
         ),
     }
 
@@ -64,7 +67,8 @@ def ai_call(fact):
 
     responses.append(response.choices[0].message.content)
 
-    print(responses[-1])
+    #print(responses[-1])
+    return responses[-1]
     
     
 

@@ -1,8 +1,10 @@
 import speech_recognition as sr
 from pynput import keyboard
+import json
 import perpcall
 
 fulltext = []
+fullresponses = []
 
 def on_press(key):
     try:
@@ -11,7 +13,24 @@ def on_press(key):
                 res = "".join(fulltext[0:len(fulltext)])
             else:
                 res = "".join(fulltext[-2:])
-            perpcall.ai_call(res)
+            check = perpcall.ai_call(res)
+            try:
+                responseDict = json.loads(check)
+                classification = responseDict.get("classification")
+                explanation = responseDict.get("explanation")
+                
+                if classification == 0:
+                    outcome = "False"
+                if classification == 1:
+                    outcome = "True"
+                if classification == 3:
+                    outcome = "Could not be fact checked"
+                print("Classification:", outcome)
+                print("Explanation:", explanation)
+
+            except:
+                print("error converting to json")
+                print(check)
     except AttributeError:
         pass
 
