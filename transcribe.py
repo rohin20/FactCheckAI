@@ -1,11 +1,30 @@
 import speech_recognition as sr
+from pynput import keyboard
+import perpcall
+
+fulltext = []
+
+def on_press(key):
+    try:
+        if key == keyboard.Key.space:
+            if len(fulltext) < 3:
+                res = "".join(fulltext[0:len(fulltext)])
+            else:
+                res = "".join(fulltext[-2:])
+            perpcall.ai_call(res)
+    except AttributeError:
+        pass
+
+
 
 def live_transcribe():
-    # Initialize recognizer
+    
     recognizer = sr.Recognizer()
     recognizer.pause_threshold = 1 
     
-    # Use the default microphone as the audio source
+    listener = keyboard.Listener(on_press=on_press)
+    listener.start()
+    
     with sr.Microphone() as source:
         print("Initializing... Please wait for calibration...")
         # Calibrate for ambient noise
@@ -14,12 +33,14 @@ def live_transcribe():
         
         while True:
             try:
-                audio = recognizer.listen(source) 
-                text = recognizer.recognize_google(audio)
-                print(f"{text}\n")
                 
 
+                audio = recognizer.listen(source) 
+                text = f"{recognizer.recognize_google(audio)}\n"
+                print(text)
+                fulltext.append(text)
 
+                
             except sr.UnknownValueError:
                 pass
             except sr.RequestError as e:
@@ -27,5 +48,8 @@ def live_transcribe():
             except KeyboardInterrupt:
                 print("\nStopping transcription...")
                 break
+    print(fulltext)
+
+
 
 live_transcribe()
